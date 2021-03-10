@@ -70,12 +70,9 @@ sub pluginmain {
 
 		my $win8 = int($keys[66] / 6);
 		my $isWin8 = $win8 & 1;
-		::rptMsg(sprintf "%-25s %-20s","isWin8",$isWin8);
-		::rptMsg(sprintf "%-25s %-20s","keys[66]",hex $keys[66]);
 
 		$keys[66] = ($keys[66] & (hex 'F7')) | (($isWin8 & 2) * 4); 
 
-		::rptMsg(sprintf "%-25s %-20s","keys[66]",hex $keys[66]);
 		my $i = 24;
 		my $maps = "BCDFGHJKMPQRTVWXY2346789";
 		my @keymap = unpack 'a' x length $maps, $maps;
@@ -95,21 +92,18 @@ sub pluginmain {
 			$keyOutput = $keyOutput . $keymap[$current + 1];
 			$last = $current;
 		} while ( $i >= 0 );
-		::rptMsg(sprintf "%-25s %-20s","keyOutput",$keyOutput);
 		my $strKey = substr($keyOutput, 0,5)."-".substr($keyOutput, 5,5)."-".substr($keyOutput, 10,5)."-".substr($keyOutput, 15,5)."-".substr($keyOutput, 20,5);
-		::rptMsg(sprintf "%-25s %-20s","keyOutput",$strKey);
+		::rptMsg(sprintf "%-25s %-20s","InstalledKey",$strKey);
 		if ($isWin8 == 1) {
 			my $keypart = substr($keyOutput, 2, $last);
-			::rptMsg(sprintf "%-25s %-20s","keypart",$keypart);
 
 			my $insert = "N";
 			$keyOutput =~ s/$keypart/$keypart$insert/ ;
 			if ($last == 0) {
 				$keyOutput = $insert . $keyOutput
 			}
-			::rptMsg(sprintf "%-25s %-20s","keyOutput",$keyOutput);
 			my $strKey = substr($keyOutput, 0,5)."-".substr($keyOutput, 5,5)."-".substr($keyOutput, 10,5)."-".substr($keyOutput, 15,5)."-".substr($keyOutput, 20,5);
-			::rptMsg(sprintf "%-25s %-20s","strKey",$strKey);
+			::rptMsg(sprintf "%-25s %-20s","InstalledKey",$strKey);
 
 		}
 
